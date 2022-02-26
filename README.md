@@ -192,7 +192,6 @@ add this to your qb-target/init.lua (make sure that its under Config.TargetModel
         distance = 3.5,
     },
 ```
-```
 
 
 Add to shared
