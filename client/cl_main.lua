@@ -8,6 +8,7 @@ local jobPed
 local useBaitCooldown = 3
 local illegalhunting = false
 local hunting1 = false
+local hunting2 = false
 
 local HuntingZones =  { 
   'MTCHIL',
@@ -24,6 +25,15 @@ local HuntingAnimals = {
   'a_c_mtlion',
   ''
 }
+
+local PoachingAnimals = {
+  'a_c_husky',
+  'cs_orleans',
+  'a_c_husky',
+  'a_c_chimp',
+  'a_c_rhesus'
+}
+
 
 
 
@@ -103,7 +113,71 @@ hunting1:onPlayerInOut(function(isPointInside)
 end)
 
 
+local hunting2 = PolyZone:Create({
+  vector2(5031.46, -4992.36),
+  vector2(5117.32, -4965.71),
+  vector2(5093.46, -4957.36),
+  vector2(5076.55, -4948.27),
+  vector2(5021.01, -4936.49),
+  vector2(4963.61, -4948.76),
+  vector2(4920.51, -4518.03),
+  vector2(4574.47, -4495.4),
+  vector2(4543.8, -4565.8),
+  vector2(4524.2, -4597.74),
+  vector2(4561.02, -4687.65),
+  vector2(4696.17, -4640.88),
+  vector2(4847.11, -4764.49),
+  vector2(4891.55, -4754.8),
+  vector2(4915.35, -4929.2),
+  vector2(4841.45, -4853.53),
+  vector2(4845.63, -4887.64),
+  vector2(4928.14, -4859.69),
+  vector2(4940.02, -4825.91)
+  }, {
+  debugPoly = true,
+  name="hunting2",
+  minZ = -20.82234191894,
+  maxZ = 150.83
 
+})
+
+hunting2:onPlayerInOut(function(isPointInside)
+  if isPointInside then
+      inhunting2 = true
+      exports['t-notify']:Alert({
+        style = 'info', 
+        message = 'Entered Illegal Hunting Area'
+      })
+--[[      exports['qb-target']:AddTargetEntity(PoachingAnimals, {
+        options = {
+            {
+              --item = 'weapon-knife',
+              event = "Leux-hunting:skinpoachedAnimal",
+              icon = "far fa-hand-paper",
+              label = "Skin",
+            },
+        },
+        distance = 3.0
+      })]]
+
+  else
+      inhunting2 = false
+      exports['t-notify']:Alert({
+        style = 'info', 
+        message = 'Exited Illegal Hunting Area'
+      })
+--[[      exports['qb-target']:RemoveTargetEntity(PoachingAnimals, {
+        options = {
+            {
+              event = "Leux-hunting:skinpoachedAnimal",
+              icon = "far fa-hand-paper",
+              label = "Skin",
+            },
+        },
+        distance = 3.0
+      })]]
+  end
+end)
 
 
 
@@ -145,6 +219,36 @@ Citizen.CreateThread(function()
     `a_c_mtlion`,
   }
 
+  local chimpanzee = {
+    `a_c_chimp`,
+    `a_c_rhesus`,
+  }
+  
+  local deer = {
+    `a_c_deer`,
+  }
+  
+  local boar = {
+    `a_c_boar`,
+  }
+  
+  local wolf = {
+    `a_c_coyote`,
+  }
+  
+  local husky = {
+    `a_c_husky`,
+  }
+  
+  local bigfoot = {
+    `cs_orleans`,
+  }
+  local poachinglegalHunts = {
+    `a_c_husky`,
+    `a_c_chimp`,
+    `a_c_rhesus`,
+  }
+  
   local illlegalHunts = {
     `a_c_chop`,
     `a_c_husky`,
@@ -175,6 +279,147 @@ Citizen.CreateThread(function()
     distance = 6.5
   })
 
+--exports['qb-target']:AddTargetModel(poachinglegalHunts, {
+ --   options = {
+  --    {
+   --     item = 'weapon_knife',
+   --     event = "Leux-hunting:skinpoachedAnimal",
+   --     icon = "far fa-hand-paper",
+   --     label = "Skin",
+   --     canInteract = function()
+	--				if inhunting2 then 
+	--					  return true
+	--				else 
+	--					  return false
+	--				end 
+	--			end,
+    --  },
+ --   },
+ --   job = {"all"},
+ --   distance = 6.5
+ -- })
+
+  exports['qb-target']:AddTargetModel(deer, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:skinpoachedchimpanzeeAnimal",
+        icon = "far fa-hand-paper",
+        label = "Skin Chimpanzee",
+        canInteract = function()
+					if inhunting2 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+
+  exports['qb-target']:AddTargetModel(chimpanzee, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:deerAnimal",
+        icon = "far fa-hand-paper",
+        label = "Skin Chimp",
+        canInteract = function()
+					if inhunting1 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+
+  exports['qb-target']:AddTargetModel(boar, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:boarAnimal",
+        icon = "far fa-hand-paper",
+        label = "Skin Boar",
+        canInteract = function()
+					if inhunting1 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+
+  exports['qb-target']:AddTargetModel(wolf, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:wolfAnimal",
+        icon = "far fa-hand-paper",
+        label = "Skin Coyote",
+        canInteract = function()
+					if inhunting1 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+  
+  exports['qb-target']:AddTargetModel(husky, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:wolfAnimal",
+        icon = "far fa-hand-paper",
+        label = "Skin Husky",
+        canInteract = function()
+					if inhunting2 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+  
+  exports['qb-target']:AddTargetModel(bigfoot, {
+    options = {
+      {
+        item = 'weapon_knife',
+        event = "Leux-hunting:skinbigfoot",
+        icon = "far fa-hand-paper",
+        label = "Skin Bigfoot",
+        canInteract = function()
+					if inhunting2 then 
+						  return true
+					else 
+						  return false
+					end 
+				end,
+      },
+    },
+    job = {"all"},
+    distance = 6.5
+  })
+
+
   --//ARP\\-- To be finished for events
   --if Config.EnablePoaching then
   -- if illegalhunting then
@@ -191,6 +436,21 @@ Citizen.CreateThread(function()
   --   })
   -- end
   --//ARP\\-- To be finished for events
+
+--if Config.EnablePoaching1 then
+  -- if illegalhunting then
+  --   exports['qb-targer']:AddTargetModel(illlegalHunts, {
+  --     options = {
+  --       {
+  --         event = "Leux-hunting:skinAnimalIllegal",
+  --         icon = "far fa-hand-paper",
+  --         label = "Skin",
+  --       },
+  --     },
+  --     job = {"all"},
+  --     distance = 1.5
+  --   })
+  -- end
 
   SetScenarioTypeEnabled('WORLD_DEER_GRAZING',false)
   SetScenarioTypeEnabled('WORLD_COYOTE_WANDER',false)
@@ -263,21 +523,6 @@ AddEventHandler('Leux-hunting:spawnJobPed',function(coords, heading)
   SetBlockingOfNonTemporaryEvents(jobPed, true)
   SetModelAsNoLongerNeeded(hash)
 end)--]]
-
-RegisterNetEvent("Leux-hunting:payammo")
-AddEventHandler("Leux-hunting:payammo", function()
-  local weapon = GetSelectedPedWeapon(PlayerPedId())
-  if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
-    TriggerServerEvent("remove:money")
-  else
-    QBCore.Functions.Notify("How am Im Suppose to reload your sniper if your not holding it?", "error")
-  end
-end)
-
-RegisterNetEvent("Leux-hunting:setammo")
-AddEventHandler("Leux-hunting:setammo", function()
-  SetPedAmmo(PlayerPedId(), 'weapon_huntingrifle', 10)
-end)
 
 
 RegisterNetEvent('Leux-hunting:spawnAnimal')
@@ -373,6 +618,7 @@ AddEventHandler('Leux-hunting:usedBait', function()
       TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
       QBCore.Functions.Progressbar("eat_something", "Setting Bait..", 5000)
       Citizen.Wait(5000)
+      TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
       local seconds = math.random(10,35)
       local circles = 1
       local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
@@ -435,6 +681,369 @@ function LoadAnimDict(dict)
 end
 
 
+  --poaching
+  
+  function usedillegalBait()
+  Citizen.CreateThread(function()
+    while used do
+      print('waiting to spawn')
+      Wait(1500)
+      print('spawning')
+      TriggerEvent('Leux-hunting:spawnpoaching')
+      used = false
+    end
+  end)
+end
+
+RegisterNetEvent('Leux-hunting:spawnpoaching')
+AddEventHandler('Leux-hunting:spawnpoaching', function()
+  local ped = PlayerPedId()
+  local coords = GetEntityCoords(ped)
+  local radius = 50.0
+  local x = coords.x + math.random(-radius,radius)
+  local y = coords.y + math.random(-radius,radius)
+  local safeCoord, outPosition = GetSafeCoordForPed(x,y,coords.z,false,16)
+  --animal1 = Config.PoachingAnimals[math.random(#Config.PoachingAnimals)] --HuntingAnimals
+  animal1 = PoachingAnimals[math.random(#PoachingAnimals)]
+  local hash = GetHashKey(animal1)
+  if not HasModelLoaded(hash) then
+    RequestModel(hash)
+    Wait(10)
+  end
+  while not HasModelLoaded(hash) do
+    Wait(10)
+  end
+  if outPosition.x > 1 or outPosition.x < -1  then
+    --Wait(2000)
+    Wait(8000)
+    baitAnimal = CreatePed(28, hash, outPosition.x, outPosition.y, outPosition.z, 0, true, false)
+  else
+    QBCore.Functions.Notify("You are too far away from the bait", "error")
+  end
+  if DoesEntityExist(baitAnimal) then
+    TaskGoToCoordAnyMeans(baitAnimal,coords,2.0,0,786603,0)
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:usedPoaching')
+AddEventHandler('Leux-hunting:usedPoaching', function()
+  --for k,v in pairs (HuntingZones) do
+  if inhunting2 then
+    if cooldown <= 0 then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Setting Bait..", 5000)
+      Citizen.Wait(5000)
+      TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+      local seconds = math.random(10,35)
+      local circles = 1
+      local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+      if success then
+        local seconds1 = math.random(10,35)
+        local circles1 = 1
+        local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+        if success1 then
+          local seconds2 = math.random(10,35)
+          local circles2 = 1
+          local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+          if success2 then
+            Citizen.Wait(100)
+            ClearPedTasksImmediately(PlayerPedId())
+            used = true
+            usedillegalBait()
+            TriggerEvent('Leux-hunting:spawnpoaching')
+            TriggerServerEvent('Leux-hunting:removepoachingBait')
+            TriggerEvent("QBCore:Notify", "Success, move away and wait for the animal to arrive", "success")
+          end
+        end
+      end
+    end
+  else
+    QBCore.Functions.Notify("You Are Not In a Poaching Zone", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:skinpoachedAnimal')
+AddEventHandler('Leux-hunting:skinpoachedAnimal', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:poachingReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:skinpoachedchimpanzeeAnimal')
+AddEventHandler('Leux-hunting:skinpoachedchimpanzeeAnimal', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Chimpanzee..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:poachingchimpReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:deerAnimal')
+AddEventHandler('Leux-hunting:deerAnimal', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Deer..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:deerReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:boarAnimal')
+AddEventHandler('Leux-hunting:boarAnimal', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Boar..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:boarReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:wolfAnimal')
+AddEventHandler('Leux-hunting:wolfAnimal', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Wolf..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:wolfReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:skinbigfoot')
+AddEventHandler('Leux-hunting:skinbigfoot', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Bigfoot..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:bigfootReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+RegisterNetEvent('Leux-hunting:skinmtlion')
+AddEventHandler('Leux-hunting:skinmtlion', function()
+  local weapon = GetSelectedPedWeapon(PlayerPedId())
+  if DoesEntityExist(baitAnimal) then
+    if QBCore.Shared.Weapons[weapon]["name"] ~= "weapon_unarmed" and not QBCore.Shared.Weapons["weapon_huntingrifle"] then
+      LoadAnimDict('amb@medic@standing@kneel@base')
+      LoadAnimDict('anim@gangops@facility@servers@bodysearch@')
+      TaskPlayAnim(PlayerPedId(), "amb@medic@standing@kneel@base" ,"base" ,8.0, -8.0, -1, 1, 0, false, false, false )
+      TaskPlayAnim(PlayerPedId(), "anim@gangops@facility@servers@bodysearch@" ,"player_search" ,8.0, -8.0, -1, 48, 0, false, false, false )
+      QBCore.Functions.Progressbar("eat_something", "Skinning Mountain Lion..", 5000)
+        Citizen.Wait(5000)
+          TriggerEvent('animations:client:EmoteCommandStart', {"medic"})
+          local seconds = math.random(10,35)
+          local circles = 1
+          local success = exports['qb-lock']:StartLockPickCircle(circles, seconds, success)
+          if success then
+            local seconds1 = math.random(10,35)
+            local circles1 = 1
+            local success1 = exports['qb-lock']:StartLockPickCircle(circles1, seconds1, success1)
+            if success1 then
+              local seconds2 = math.random(10,35)
+              local circles2 = 1
+              local success2 = exports['qb-lock']:StartLockPickCircle(circles2, seconds2, success2)
+              if success2 then
+                ClearPedTasksImmediately(PlayerPedId())
+                DeleteEntity(baitAnimal)
+                TriggerServerEvent('Leux-hunting:mountainlionReward')
+              end
+            end
+          end
+    else
+      QBCore.Functions.Notify("You need a knife", "error")
+    end
+  else
+    QBCore.Functions.Notify("You have already skinned 1 animal for the bait or this is another hunters animal", "error")
+  end
+end)
+
+Citizen.CreateThread(function()
+  while true do
+    Wait(1000)
+    if DoesEntityExist(baitAnimal) then
+      local ped = PlayerPedId()
+      local coords = GetEntityCoords(PlayerPedId())
+      local animalCoords = GetEntityCoords(baitAnimal)
+      local dst = #(coords - animalCoords)
+      HideHudComponentThisFrame(14)
+      if dst < 2.5 then -- spook animal
+        TaskCombatPed(baitAnimal,ped,0,16)
+      end
+    end
+  end
+end)
 
 
 
@@ -445,5 +1054,9 @@ RegisterCommand('getzone', function()
 end)
 
 RegisterCommand('testhuntingspawn',function()
+   TriggerEvent('Leux-hunting:spawnAnimal')
+end)
+
+RegisterCommand('testpoachingspawn',function()
    TriggerEvent('Leux-hunting:spawnAnimal')
 end)
