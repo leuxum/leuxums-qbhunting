@@ -1,5 +1,5 @@
 # leuxums-qbhunting based off of QBUS-NOPIXEL-HUNTING
-
+VERSION 0.2
 Discord:
 leuxum#4926
 
