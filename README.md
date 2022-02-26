@@ -1,4 +1,7 @@
 # leuxums-qbhunting based off of QBUS-NOPIXEL-HUNTING
+THIS SCRIPT WAS MADE IN PARTNERSHIP WITH MIDDY USING QB-LOCK
+https://github.com/M-Middy
+middys link to his github page
 
 Discord:
 leuxum#4926
