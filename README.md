@@ -4,7 +4,7 @@ https://github.com/M-Middy
 middys link to his github page
 
 Discord:
-leuxum#4926
+leuxum#4926 if you need any help then add me on discord
 
 Target
 
