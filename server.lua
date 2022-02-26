@@ -37,6 +37,13 @@ AddEventHandler('Leux-hunting:removeBait', function()
   Player.Functions.RemoveItem("huntingbait", 1)
 end)
 
+RegisterServerEvent('Leux-hunting:removepoachingBait')
+AddEventHandler('Leux-hunting:removepoachingBait', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  Player.Functions.RemoveItem("poachingbait", 1)
+end)
+
 RegisterServerEvent('remove:money')
 AddEventHandler('remove:money', function(totalCash)
   local src = source
@@ -56,6 +63,11 @@ QBCore.Functions.CreateUseableItem("huntingbait", function(source, item)
   TriggerClientEvent('Leux-hunting:usedBait', source)
 end)
 
+QBCore.Functions.CreateUseableItem("poachingbait", function(source, item)
+  local Player = QBCore.Functions.GetPlayer(source)
+
+  TriggerClientEvent('Leux-hunting:usedPoaching', source)
+end)
 
 local carcasses = {
   huntingcarcass1 = 200,
@@ -64,6 +76,15 @@ local carcasses = {
   huntingcarcass4 = 1000,
   meat = 25,
   leather = 50
+}
+
+local illegalcarcasses = {
+  illegalcarcass1 = 300,
+  illegalcarcass2 = 500,
+  illegalcarcass3 = 800,
+  illegalcarcass4 = 1100,
+  meat = 45,
+  leather = 55
 }
 
 RegisterServerEvent('Leux-hunting:server:sell')
@@ -78,4 +99,238 @@ AddEventHandler('Leux-hunting:server:sell', function()
             end
         end
     end
+end)
+
+RegisterServerEvent('Leux-hunting:server:sellpoached')
+AddEventHandler('Leux-hunting:server:sellpoached', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    for k,v in pairs(illegalcarcasses) do
+        local item = Player.Functions.GetItemByName(k)
+        if item ~= nil then
+            if Player.Functions.RemoveItem(k, item.amount) then
+                Player.Functions.AddMoney('cash', v * item.amount)
+            end
+        end
+    end
+end)
+
+RegisterServerEvent('Leux-hunting:poachingchimpReward')
+AddEventHandler('Leux-hunting:poachingchimpReward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("chimpcarcass1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["chimpcarcass1"], "add")
+    Player.Functions.AddItem("meat", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("chimpcarcass2", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["chimpcarcass2"], "add")
+    Player.Functions.AddItem("meat", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("chimpcarcass3", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["chimpcarcass3"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+  else 
+    Player.Functions.AddItem("chimpcarcass4", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["chimpcarcass4"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
+end)
+
+RegisterServerEvent('Leux-hunting:deerReward')
+AddEventHandler('Leux-hunting:deerReward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("deercarcass1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["deercarcass1"], "add")
+    Player.Functions.AddItem("meat", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("deercarcass2", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["deercarcass2"], "add")
+    Player.Functions.AddItem("meat", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("deercarcass3", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["deercarcass3"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  else 
+    Player.Functions.AddItem("deercarcass4", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["deercarcass4"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 3)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
+end)
+
+RegisterServerEvent('Leux-hunting:boarReward')
+AddEventHandler('Leux-hunting:boarReward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("boarcarcass1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["boarcarcass1"], "add")
+    Player.Functions.AddItem("meat", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("boarcarcass2", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["boarcarcass2"], "add")
+    Player.Functions.AddItem("meat", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("boarcarcass3", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["boarcarcass3"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  else 
+    Player.Functions.AddItem("boarcarcass4", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["boarcarcass4"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
+end)
+
+RegisterServerEvent('Leux-hunting:wolfReward')
+AddEventHandler('Leux-hunting:wolfReward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("wolfcarcass1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["wolfcarcass1"], "add")
+    Player.Functions.AddItem("meat", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("wolfcarcass2", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["wolfcarcass2"], "add")
+    Player.Functions.AddItem("meat", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("wolfcarcass3", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["wolfcarcass3"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  else 
+    Player.Functions.AddItem("wolfcarcass4", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["wolfcarcass4"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
+end)
+
+RegisterServerEvent('Leux-hunting:bigfootReward')
+AddEventHandler('Leux-hunting:bigfootReward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("illegalcarcass1", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["illegalcarcass1"], "add")
+    Player.Functions.AddItem("meat", 3)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("illegalcarcass2", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["illegalcarcass2"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("illegalcarcass3", 2)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["illegalcarcass3"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  else 
+    Player.Functions.AddItem("bigfootfur", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["bigfootfur"], "add")
+    Player.Functions.AddItem("meat", 7)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather1", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather1"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
+end)
+
+RegisterServerEvent('Leux-hunting:mountainlionReward')
+AddEventHandler('Leux-hunting:mountainlionreward', function()
+  local src = source
+  local Player = QBCore.Functions.GetPlayer(src)
+  local randomAmount = math.random(1,30)
+  if randomAmount > 1 and randomAmount < 15 then
+    Player.Functions.AddItem("mtlioncarcass1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["mtlioncarcass1"], "add")
+    Player.Functions.AddItem("meat", 3)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 15 and randomAmount < 23 then
+    Player.Functions.AddItem("mtlioncarcass2", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["mtlioncarcass2"], "add")
+    Player.Functions.AddItem("meat", 4)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  elseif randomAmount > 23 and randomAmount < 29 then
+    Player.Functions.AddItem("mtlioncarcass3", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["mtlioncarcass3"], "add")
+    Player.Functions.AddItem("meat", 5)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather"], "add")
+  else 
+    Player.Functions.AddItem("mtlioncarcass4", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["mtlioncarcass4"], "add")
+    Player.Functions.AddItem("meat", 7)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["meat"], "add")
+    Player.Functions.AddItem("leather1", 1)
+    TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items["leather1"], "add")
+  end
+
+ TriggerClientEvent('player:receiveItem', _source, 'meat',math.random(1,10))
 end)
