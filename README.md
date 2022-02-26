@@ -40,7 +40,7 @@ Target
     },
 ```
 2. add this to your qb-target/init.lua (make sure its under Config.TargetModels)
-
+```
 ["animal1"] = {
 		models = {
 			"a_c_boar"
@@ -97,7 +97,8 @@ Target
         },
         distance = 3.5,
     },
-
+    
+```
 ```
 
 
