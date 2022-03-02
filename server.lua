@@ -71,20 +71,40 @@ end)
 
 local carcasses = {
   huntingcarcass1 = 200,
-  huntingcarcass2 = 475,
-  huntingcarcass3 = 725,
-  huntingcarcass4 = 1000,
+  huntingcarcass2 = 300,
+  huntingcarcass3 = 400,
+  huntingcarcass4 = 550,
   meat = 25,
-  leather = 50
+  leather = 50,
+  deercarcass1 = 125,
+  deercarcass2 = 235,
+  deercarcass3 = 450,
+  deercarcass4 = 550,
+  boarcarcass1 = 125,
+  boarcarcass2 = 250,
+  boarcarcass3 = 290,
+  boarcarcass4 = 450,
+  wolfcarcass1 = 75,
+  wolfcarcass2 = 120,
+  wolfcarcass3 = 230,
+  wolfcarcass4 = 300,
+  mtlioncarcass1 = 200,
+  mtlioncarcass2 = 275,
+  mtlioncarcass3 = 320,
+  mtlioncarcass4 = 495
 }
 
 local illegalcarcasses = {
-  illegalcarcass1 = 300,
-  illegalcarcass2 = 500,
-  illegalcarcass3 = 800,
-  illegalcarcass4 = 1100,
+  illegalcarcass1 = 225,
+  illegalcarcass2 = 325,
+  illegalcarcass3 = 450,
+  illegalcarcass4 = 500,
   meat = 45,
-  leather = 55
+  chimpcarcass1 = 225,
+  chimpcarcass2 = 325,
+  chimpcarcass3 = 450,
+  chimpcarcass4 = 595,
+  bigfootfur = 1500
 }
 
 RegisterServerEvent('Leux-hunting:server:sell')
