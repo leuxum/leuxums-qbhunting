@@ -1,3 +1,7 @@
+
+![image](https://user-images.githubusercontent.com/68282622/160637413-8a9e686b-f1d2-4900-bf4b-4d717e852968.png)
+
+
 # leuxums-qbhunting based off of QBUS-NOPIXEL-HUNTING
 VERSION 0.2
 Discord:
